@@ -1,0 +1,18 @@
+<custom-header></custom-header>
+<br>
+<div class="example-form-fields">
+    <mat-form-field>
+      <mat-label>Origen</mat-label>
+      <input matInput [(ngModel)]="origin" placeholder="Escribre la ciudad de origen">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Destino</mat-label>
+        <input matInput [(ngModel)]="destination" placeholder="Escribe la ciudad de destino">
+    </mat-form-field>
+
+    <button mat-raised-button (click)="search()" color="primary">
+        Buscar vuelos
+        <mat-icon>search</mat-icon>
+    </button>
+  </div>
