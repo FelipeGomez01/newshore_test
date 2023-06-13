@@ -13,22 +13,23 @@ export class HomePageComponent {
   data: FlightModel[] = [];
   rounds: number = 0;
   selectedFlights: FlightModel[] = [];
+  result: FlightModel[] = [];
 
   constructor( private homeService: HomeService ){ }
 
   search(){
     this.homeService.getFlights().subscribe({
       next: (flights) => {
+        this.selectedFlights = [];
         this.data = flights;
-        let result = this.recurso(this.data, this.destination);
-
-        console.log('result',result);
+        this.result = this.recursiveSearch(this.data, this.destination);
+        this.result.reverse();
       },
       error: (error) => console.log(error)
     });
   }
 
-  recurso(flights: FlightModel[], destination: string) : any {
+  recursiveSearch(flights: FlightModel[], destination: string) : any {
     let romper = false;
 
     let filteredFlights = flights.filter(flight => flight.arrivalStation == destination);
@@ -41,8 +42,8 @@ export class HomePageComponent {
         romper = true;
         break;
       }
-
-      return this.recurso(this.data, filteredFlights[i].departureStation);
+      
+      return this.recursiveSearch(this.data, filteredFlights[i].departureStation);
     }
 
     if(romper){
